@@ -38,13 +38,6 @@ import com.example.demo.repositories.*;
 import com.example.demo.entities.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
-
-/** TODO
- * Implement all the unit test in its corresponding class.
- * Make sure to be as exhaustive as possible. Coverage is checked ;)
- */
-
 @WebMvcTest(DoctorController.class)
 class DoctorControllerUnitTest{
 
