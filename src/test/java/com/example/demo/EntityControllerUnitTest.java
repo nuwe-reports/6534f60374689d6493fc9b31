@@ -274,7 +274,6 @@ class PatientControllerUnitTest{
                     Assertions.assertEquals("Albert", createdPatient.getFirstName());
                 });
     }
-
 }
 
 @WebMvcTest(RoomController.class)
@@ -290,9 +289,100 @@ class RoomControllerUnitTest{
     private ObjectMapper objectMapper;
 
     @Test
-    void this_is_a_test(){
-        // DELETE ME
-        assertThat(true).isEqualTo(false);
+    void shouldNotGetRooms() throws Exception {
+
+        List<Room> rooms = new ArrayList<Room>();
+        when(roomRepository.findAll()).thenReturn(rooms);
+        mockMvc.perform(get("/api/rooms"))
+                .andExpect(status().isNoContent());
     }
 
+    @Test
+    void shouldGetTwoRooms() throws Exception{
+
+        Room room = new Room("Ophthalmology");
+        Room room2 = new Room("Rheumatology");
+
+        List<Room> rooms = new ArrayList<>();
+        rooms.add(room);
+        rooms.add(room2);
+
+        when(roomRepository.findAll()).thenReturn(rooms);
+        mockMvc.perform(get("/api/rooms"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    void shouldGetRoomByRoomName() throws Exception{
+
+        Room room = new Room("Ophthalmology");
+
+        Optional<Room> optional = Optional.of(room);
+
+        assertThat(optional).isPresent();
+        assertThat(optional.get().getRoomName()).isEqualTo(room.getRoomName());
+        assertThat(room.getRoomName()).isEqualTo("Ophthalmology");
+
+        when(roomRepository.findByRoomName(room.getRoomName())).thenReturn(optional);
+        mockMvc.perform(get("/api/rooms/" + room.getRoomName()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldNotGetAnyRoomByRoomName() throws Exception{
+
+        String roomName = "Rheumatology";
+        mockMvc.perform(get("/api/rooms/" + roomName))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    void shouldDeleteRoomByRoomName() throws Exception{
+
+        Room room = new Room("Ophthalmology");
+
+        Optional<Room> optional = Optional.of(room);
+
+        assertThat(optional).isPresent();
+        assertThat(optional.get().getRoomName()).isEqualTo(room.getRoomName());
+        assertThat(room.getRoomName()).isEqualTo("Ophthalmology");
+
+        when(roomRepository.findByRoomName(room.getRoomName())).thenReturn(optional);
+        mockMvc.perform(delete("/api/rooms/" + room.getRoomName()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldNotDeleteRoomByRoomName() throws Exception{
+
+        String roomName = "Rheumatology";
+        mockMvc.perform(delete("/api/rooms/" + roomName))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldDeleteAllRooms() throws Exception{
+
+        mockMvc.perform(delete("/api/rooms"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldCreateRoom() throws Exception{
+
+        Room room = new Room("Ophthalmology");
+
+        mockMvc.perform(post("/api/room").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(room)))
+                .andExpect(status().isCreated())
+                .andExpect(result -> {
+                    Room createdRoom = objectMapper.readValue(
+                            result.getResponse().getContentAsString(),
+                            Room.class);
+                    Assertions.assertEquals("Ophthalmology", createdRoom.getRoomName());
+                });
+    }
 }
