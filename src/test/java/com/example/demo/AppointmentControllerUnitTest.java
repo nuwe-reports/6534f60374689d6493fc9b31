@@ -104,8 +104,6 @@ class AppointmentControllerUnitTest{
         mockMvc.perform(post("/api/appointment").contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(appointment)))
                 .andExpect(status().isOk());
-                
-
 
 
         List<Appointment> appointments = new ArrayList<Appointment>();
