@@ -1,11 +1,6 @@
-
 package com.example.demo;
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,24 +9,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import java.time.LocalDateTime;
-import java.time.format.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import com.example.demo.controllers.*;
 import com.example.demo.repositories.*;
@@ -96,10 +83,10 @@ class DoctorControllerUnitTest{
 
     @Test
     void shouldNotGetAnyDoctorById() throws Exception{
+
         long id = 15;
         mockMvc.perform(get("/api/doctors/" + id))
                 .andExpect(status().isNotFound());
-
     }
 
     @Test
@@ -124,7 +111,6 @@ class DoctorControllerUnitTest{
     void shouldNotDeleteDoctorById() throws Exception{
 
         long id = 15;
-
         mockMvc.perform(delete("/api/doctors/" + id))
                 .andExpect(status().isNotFound());
     }
@@ -216,7 +202,6 @@ class PatientControllerUnitTest{
         long id = 15;
         mockMvc.perform(get("/api/patients/" + id))
                 .andExpect(status().isNotFound());
-
     }
 
     @Test
@@ -329,7 +314,6 @@ class RoomControllerUnitTest{
         String roomName = "Rheumatology";
         mockMvc.perform(get("/api/rooms/" + roomName))
                 .andExpect(status().isNotFound());
-
     }
 
     @Test
