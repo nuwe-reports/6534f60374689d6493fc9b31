@@ -144,6 +144,7 @@ class DoctorControllerUnitTest{
     }
 }
 
+@WebMvcTest(PatientController.class)
 class PatientControllerUnitTest{
     @MockBean
     private PatientRepository patientRepository;
