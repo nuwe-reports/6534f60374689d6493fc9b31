@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.example.demo.repositories.DoctorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,8 +18,6 @@ import com.example.demo.entities.*;
 import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
