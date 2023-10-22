@@ -64,7 +64,7 @@ public class AppointmentController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }else{
                 appointmentRepository.save(appointment);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.CREATED);
             }
         }
     }
